@@ -10,8 +10,17 @@ st.set_page_config(
 )
 
 # Load saved model and feature names
-model = joblib.load("heart_model.pkl")
-feature_names = joblib.load("feature_names.pkl")
+try:
+    model = joblib.load("heart_model.pkl")
+    feature_names = joblib.load("feature_names.pkl")
+
+except FileNotFoundError:
+    st.error("Model files not found.")
+    st.stop()
+
+except Exception as error:
+    st.error(f"Error loading model: {error}")
+    st.stop()
 
 # Title
 st.title("❤️ HeartWise AI")
@@ -142,8 +151,13 @@ if predict_button:
         fill_value=0
     )
 
+try:
     prediction = model.predict(patient_encoded)[0]
     probability = model.predict_proba(patient_encoded)[0]
+
+except Exception:
+    st.error("Prediction failed. Please try again.")
+    st.stop()
 
     st.divider()
     st.header("Prediction Result")
