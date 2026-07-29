@@ -155,8 +155,8 @@ try:
     prediction = model.predict(patient_encoded)[0]
     probability = model.predict_proba(patient_encoded)[0]
 
-except Exception:
-    st.error("Prediction failed. Please try again.")
+except Exception as error:
+    st.error(f"Prediction failed: {error}")
     st.stop()
 
     st.divider()
