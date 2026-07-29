@@ -126,6 +126,7 @@ with st.form("patient_form"):
     predict_button = st.form_submit_button("Predict Heart Disease Risk")
 
 # Prediction
+    # Prediction
 if predict_button:
 
     patient_data = pd.DataFrame({
@@ -151,13 +152,13 @@ if predict_button:
         fill_value=0
     )
 
-try:
-    prediction = model.predict(patient_encoded)[0]
-    probability = model.predict_proba(patient_encoded)[0]
+    try:
+        prediction = model.predict(patient_encoded)[0]
+        probability = model.predict_proba(patient_encoded)[0]
 
-except Exception as error:
-    st.error(f"Prediction failed: {error}")
-    st.stop()
+    except Exception as error:
+        st.error(f"Prediction failed: {error}")
+        st.stop()
 
     st.divider()
     st.header("Prediction Result")
@@ -166,6 +167,7 @@ except Exception as error:
         confidence = probability[1] * 100
 
         st.error("High Risk of Heart Disease")
+
         st.metric(
             "Prediction Confidence",
             f"{confidence:.1f}%"
@@ -181,6 +183,7 @@ except Exception as error:
         confidence = probability[0] * 100
 
         st.success("Low Risk of Heart Disease")
+
         st.metric(
             "Prediction Confidence",
             f"{confidence:.1f}%"
